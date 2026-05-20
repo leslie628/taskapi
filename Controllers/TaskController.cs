@@ -25,14 +25,14 @@ namespace TaskManagerApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(TaskItem task)
+        public async Task<IActionResult> Create(TaskItem task)
         {
-            _service.Create(task);
-            return Ok();
+            await _service.Create(task);
+            return Ok(task);
         }
 
         [HttpPut]
-        public IActionResult Update(TaskItem task)
+        public async Task<IActionResult> Update(TaskItem task)
         {
             _service.Update(task);
             return Ok();

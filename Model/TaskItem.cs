@@ -6,6 +6,6 @@
         public string title { get; set; }
         public string description { get; set; }
         public bool isCompleted { get; set; }
-        public DateTime CreatedDate { get; set; }= DateTime.Now;
+        public DateTime CreatedDate { get; set; }= DateTime.UtcNow;
     }
 }

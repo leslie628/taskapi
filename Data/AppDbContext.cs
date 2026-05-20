@@ -9,5 +9,6 @@ namespace TaskManagerApi.Data
         {
         }
         public DbSet<TaskItem> TaskItems { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
     }
 }
