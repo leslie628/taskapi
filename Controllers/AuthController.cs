@@ -60,7 +60,11 @@ namespace TaskManagerApi.Controllers
                 Expires = DateTime.UtcNow.AddHours(1)
             });
 
-            return Ok();
+            return Ok(new
+            {
+                message = "Login successful",
+                username = user.Username
+            });
         }
 
         private string GenerateJwtToken(AppUser user)
