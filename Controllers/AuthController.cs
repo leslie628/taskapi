@@ -52,8 +52,15 @@ namespace TaskManagerApi.Controllers
                 return Unauthorized("Invalid credentials");
 
             var token = GenerateJwtToken(user);
+            Response.Cookies.Append("authToken", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None, // important if frontend is on different domain
+                Expires = DateTime.UtcNow.AddHours(1)
+            });
 
-            return Ok(new { token });
+            return Ok();
         }
 
         private string GenerateJwtToken(AppUser user)

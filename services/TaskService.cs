@@ -7,7 +7,7 @@ namespace TaskManagerApi.services
     {
         List<TaskItem> GetAll();
         TaskItem GetById(int id);
-        Task Create(TaskItem task);
+        Task<TaskItem> Create(TaskItem task);
         void Update(TaskItem task);
         void Delete(int id);
     }
@@ -29,10 +29,11 @@ namespace TaskManagerApi.services
             return _context.TaskItems.Find(id);
         }
 
-        public async Task Create(TaskItem task)
+        public async Task<TaskItem> Create(TaskItem task)
         {
-            _context.TaskItems.AddAsync(task);
-            _context.SaveChangesAsync();
+            await _context.TaskItems.AddAsync(task);
+            await _context.SaveChangesAsync();
+            return task;
         }
 
         public void Update(TaskItem task)
