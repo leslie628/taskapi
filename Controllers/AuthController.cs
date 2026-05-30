@@ -32,13 +32,17 @@ namespace TaskManagerApi.Controllers
             var user = new AppUser
             {
                 Username = dto.Username,
-                PasswordHash = dto.Password // (plain for now - learning stage)
+                PasswordHash = dto.Password
             };
 
             _context.AppUsers.Add(user);
-           await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-            return Ok("User registered successfully");
+            return Ok(new
+            {
+                message = "User Registered successfully",
+                username = user.Username
+            });
         }
 
         // LOGIN
@@ -56,7 +60,7 @@ namespace TaskManagerApi.Controllers
             {
                 HttpOnly = true,
                 Secure = true,
-                SameSite = SameSiteMode.None, // important if frontend is on different domain
+                SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddHours(1)
             });
 
@@ -64,6 +68,23 @@ namespace TaskManagerApi.Controllers
             {
                 message = "Login successful",
                 username = user.Username
+            });
+        }
+
+        // LOGOUT
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("token", new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None
+            });
+
+            return Ok(new
+            {
+                message = "Logged out successfully"
             });
         }
 
