@@ -8,5 +8,6 @@ namespace TaskManagerApi.Model
         public int Id { get; set;  }
         public string Username { get; set; }
         public string PasswordHash { get; set; }
+        public string display_name { get; set; }
     }
 }

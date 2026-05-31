@@ -32,7 +32,8 @@ namespace TaskManagerApi.Controllers
             var user = new AppUser
             {
                 Username = dto.Username,
-                PasswordHash = dto.Password
+                PasswordHash = dto.Password,
+                display_name=dto.Name
             };
 
             _context.AppUsers.Add(user);
@@ -41,7 +42,8 @@ namespace TaskManagerApi.Controllers
             return Ok(new
             {
                 message = "User Registered successfully",
-                username = user.Username
+                username = user.Username,
+                display_name=user.display_name
             });
         }
 
@@ -67,7 +69,9 @@ namespace TaskManagerApi.Controllers
             return Ok(new
             {
                 message = "Login successful",
-                username = user.Username
+                username = user.Username,
+                display_name=user.display_name
+
             });
         }
 
