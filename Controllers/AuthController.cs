@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using TaskManagerApi.Data;
@@ -33,7 +34,7 @@ namespace TaskManagerApi.Controllers
             {
                 Username = dto.Username,
                 PasswordHash = dto.Password,
-                display_name=dto.display_name
+                display_name = dto.display_name
             };
 
             _context.AppUsers.Add(user);
@@ -43,7 +44,7 @@ namespace TaskManagerApi.Controllers
             {
                 message = "User Registered successfully",
                 username = user.Username,
-                display_name=user.display_name
+                display_name = user.display_name
             });
         }
 
@@ -114,6 +115,21 @@ namespace TaskManagerApi.Controllers
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> Me()
+        {
+            var userId = User.FindFirst("UserId")?.Value;
+            var user = await _context.AppUsers.FindAsync(int.Parse(userId));
+
+            return Ok(new
+            {
+                user.Id,
+                user.Username,
+                user.display_name
+            });
         }
     }
 }
