@@ -118,8 +118,8 @@ namespace TaskManagerApi.Controllers
         }
 
         [Authorize]
-        [HttpGet("me")]
-        public async Task<IActionResult> Me()
+        [HttpGet("user")]
+        public async Task<IActionResult> CurrentUser()
         {
             var userId = User.FindFirst("UserId")?.Value;
             var user = await _context.AppUsers.FindAsync(int.Parse(userId));
