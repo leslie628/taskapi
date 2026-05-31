@@ -70,7 +70,7 @@ namespace TaskManagerApi.Controllers
             {
                 message = "Login successful",
                 username = user.Username,
-                display_name=user.display_name
+                display_name = user.display_name
 
             });
         }
