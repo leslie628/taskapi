@@ -33,7 +33,7 @@ namespace TaskManagerApi.Controllers
             {
                 Username = dto.Username,
                 PasswordHash = dto.Password,
-                display_name=dto.Name
+                display_name=dto.display_name
             };
 
             _context.AppUsers.Add(user);
