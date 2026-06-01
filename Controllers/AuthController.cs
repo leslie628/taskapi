@@ -62,7 +62,7 @@ namespace TaskManagerApi.Controllers
             Response.Cookies.Append("authToken", token, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true,
+                Secure = false,
                 SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddHours(1)
             });
