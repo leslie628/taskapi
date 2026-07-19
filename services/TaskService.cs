@@ -1,4 +1,5 @@
-﻿using TaskManagerApi.Data;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using TaskManagerApi.Data;
 using TaskManagerApi.Model;
 
 namespace TaskManagerApi.services
@@ -8,6 +9,7 @@ namespace TaskManagerApi.services
         List<TaskItem> GetAll();
         TaskItem GetById(int id);
         Task<TaskItem> Create(TaskItem task);
+        Task CreateBulk(List<CreateTaskRequest> tasks);
         void Update(TaskItem task);
         void Delete(int id);
     }
@@ -35,7 +37,18 @@ namespace TaskManagerApi.services
             await _context.SaveChangesAsync();
             return task;
         }
-
+        public async Task CreateBulk(List<CreateTaskRequest> tasks)
+        {
+            var entities=tasks.Select(t => new TaskItem
+            {
+                title = t.title,
+                description = t.description,
+                isCompleted = t.isCompleted,
+                CreatedDate = DateTime.UtcNow,
+            }).ToList();
+            await _context.TaskItems.AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
+        }
         public void Update(TaskItem task)
         {
             _context.TaskItems.Update(task);
