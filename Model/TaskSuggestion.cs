@@ -10,6 +10,6 @@
     {
         public string Priority { get; set; }
         public List<SubTask> Subtasks { get; set; }
-        public int total_estimated_time_hours { get; set; }
+        public double total_estimated_time_hours { get; set; }
     }
 }
