@@ -55,6 +55,13 @@ namespace TaskManagerApi.Controllers
             _service.Delete(id);
             return Ok();
         }
+
+        [HttpDelete("bulk")]
+        public IActionResult DeleteBulk(List<int> ids)
+        {
+            _service.DeleteBulk(ids);
+            return Ok();
+        }
         [HttpPost("suggest")]
         public async Task<IActionResult> GetTaskSuggestion(TaskRequest request)
         {

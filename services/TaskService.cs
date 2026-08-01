@@ -12,6 +12,7 @@ namespace TaskManagerApi.services
         Task CreateBulk(List<CreateTaskRequest> tasks);
         void Update(TaskItem task);
         void Delete(int id);
+        void DeleteBulk(List<int> ids);
     }
     public class TaskService: ITaskService
     {
@@ -63,6 +64,12 @@ namespace TaskManagerApi.services
                 _context.TaskItems.Remove(task);
                 _context.SaveChanges();
             }
+        }
+        public void DeleteBulk(List<int> ids)
+        {
+            var tasks = _context.TaskItems.Where(t => ids.Contains(t.id)).ToList();
+            _context.TaskItems.RemoveRange(tasks);
+            _context.SaveChanges();
         }
 
     }
